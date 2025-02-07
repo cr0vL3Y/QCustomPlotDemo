@@ -15,7 +15,8 @@ Widget::Widget(QWidget *parent)
     // loadBasicQCustomPlot();
     // loadSimpleQCustomPlot();
     // loadMutiAxisQCustomPlot();
-    loadDateQCustomPlot();
+    // loadDateQCustomPlot();
+    loadBarChatQCustomPlot();
 }
 
 Widget::~Widget()
@@ -25,13 +26,14 @@ Widget::~Widget()
 
 void Widget::loadBasicQCustomPlot()
 {
-    QVector<double> x(101),y(101);  // 键和值
-    for (int i=0;i<101;i++){
-        x[i] = i/50.0 -1;
-        y[i] = x[i]*x[i];
+    QVector<double> x(101), y(101); // 键和值
+    for (int i = 0; i < 101; i++)
+    {
+        x[i] = i / 50.0 - 1;
+        y[i] = x[i] * x[i];
     }
     customPlot->addGraph(); // 创建新图表
-    customPlot->graph(0)->setData(x,y); // 分配数据点
+    customPlot->graph(0)->setData(x, y); // 分配数据点
 
     // 默认情况下，QCustomPlot 有四个轴：
     // customPlot->xAxis、yAxis、xAxis2和yAxis 2，类型为QCPAxis
@@ -39,8 +41,8 @@ void Widget::loadBasicQCustomPlot()
     customPlot->xAxis->setLabel("x");
     customPlot->yAxis->setLabel("y");
 
-    customPlot->xAxis->setRange(-1,1);  // 定义图的哪部分可见
-    customPlot->yAxis->setRange(0,1);
+    customPlot->xAxis->setRange(-1, 1); // 定义图的哪部分可见
+    customPlot->yAxis->setRange(0, 1);
 
     customPlot->xAxis->grid()->setSubGridVisible(true);    // gridlines 栅格线
 
@@ -59,12 +61,12 @@ void Widget::loadSimpleQCustomPlot()
     customPlot->graph(1)->setPen(QPen(Qt::red));
 
     // 生成数据
-    QVector<double> x(251),y0(251),y1(251);
-    for (int i=0; i<251; ++i)
+    QVector<double> x(251), y0(251), y1(251);
+    for (int i = 0; i < 251; ++i)
     {
         x[i] = i;
-        y0[i] = qExp(-i/150.0)*qCos(i/10.0); // 指数衰减余弦
-        y1[i] = qExp(-i/150.0);              // 指数包络
+        y0[i] = qExp(-i / 150.0) * qCos(i / 10.0); // 指数衰减余弦
+        y1[i] = qExp(-i / 150.0);            // 指数包络
     }
 
     customPlot->xAxis2->setVisible(true);   // 设置顶轴可见
@@ -73,8 +75,8 @@ void Widget::loadSimpleQCustomPlot()
     customPlot->yAxis2->setTickLabels(false);   // 不显示刻度
 
     // pass data to graphs
-    customPlot->graph(0)->setData(x,y0);
-    customPlot->graph(1)->setData(x,y1);
+    customPlot->graph(0)->setData(x, y0);
+    customPlot->graph(1)->setData(x, y1);
 
     // 设置 图表0自动缩放，开启后会使图表0完全符合可视区域
     customPlot->graph(0)->rescaleAxes();    // 默认值是false
@@ -89,17 +91,17 @@ void Widget::loadSimpleQCustomPlot()
 void Widget::loadMutiAxisQCustomPlot()
 {
     // 句点作为小数点分隔符，逗号作为千位分隔符
-    customPlot->setLocale(QLocale(QLocale::English,QLocale::UnitedKingdom));
+    customPlot->setLocale(QLocale(QLocale::English, QLocale::UnitedKingdom));
     customPlot->legend->setVisible(true);   // 显示图例
 
     QFont legendFont = font(); // 以窗体字体开始
     legendFont.setPointSize(9); // 让图例小一点
 
     customPlot->setFont(legendFont);
-    customPlot->legend->setBrush(QBrush(QColor(255,255,255,230)));
+    customPlot->legend->setBrush(QBrush(QColor(255, 255, 255, 230)));
 
     //默认情况下，图例位于主轴矩形的插入布局中。这就是我们如何访问它来更改图例位置:
-    customPlot->axisRect()->insetLayout()->setInsetAlignment(1,Qt::AlignBottom|Qt::AlignRight);
+    customPlot->axisRect()->insetLayout()->setInsetAlignment(1, Qt::AlignBottom | Qt::AlignRight);
 
     // 设置图表 0:键轴左侧，值轴底部
     // 讲包含类似 Left Maxwell 函数
@@ -152,25 +154,25 @@ void Widget::loadMutiAxisQCustomPlot()
     QVector<double> x2(250), y2(250);
     QVector<double> x3(250), y3(250);
     QVector<double> x4(250), y4(250);
-    for (int i=0; i<25; ++i) // data for graph 0
+    for (int i = 0; i < 25; ++i) // data for graph 0
     {
-        x0[i] = 3*i/25.0;
-        y0[i] = qExp(-x0[i]*x0[i]*0.8)*(x0[i]*x0[i]+x0[i]);
+        x0[i] = 3 * i / 25.0;
+        y0[i] = qExp(-x0[i] * x0[i] * 0.8) * (x0[i] * x0[i] + x0[i]);
     }
-    for (int i=0; i<15; ++i) // data for graph 1
+    for (int i = 0; i < 15; ++i) // data for graph 1
     {
-        x1[i] = 3*i/15.0;;
-        y1[i] = qExp(-x1[i]*x1[i])*(x1[i]*x1[i])*2.6;
-        y1err[i] = y1[i]*0.25;
+        x1[i] = 3 * i / 15.0;;
+        y1[i] = qExp(-x1[i] * x1[i]) * (x1[i] * x1[i]) * 2.6;
+        y1err[i] = y1[i] * 0.25;
     }
-    for (int i=0; i<250; ++i) // data for graphs 2, 3 and 4
+    for (int i = 0; i < 250; ++i) // data for graphs 2, 3 and 4
     {
-        x2[i] = i/250.0*3*M_PI;
+        x2[i] = i / 250.0 * 3 * M_PI;
         x3[i] = x2[i];
-        x4[i] = i/250.0*100-50;
-        y2[i] = qSin(x2[i]*12)*qCos(x2[i])*10;
-        y3[i] = qCos(x3[i])*10;
-        y4[i] = 0.01*x4[i]*x4[i] + 1.5*(rand()/(double)RAND_MAX-0.5) + 1.5*M_PI;
+        x4[i] = i / 250.0 * 100 - 50;
+        y2[i] = qSin(x2[i] * 12) * qCos(x2[i]) * 10;
+        y3[i] = qCos(x3[i]) * 10;
+        y4[i] = 0.01 * x4[i] * x4[i] + 1.5 * (rand() / (double)RAND_MAX - 0.5) + 1.5 * M_PI;
     }
 
     // pass data to graphs
@@ -188,7 +190,7 @@ void Widget::loadMutiAxisQCustomPlot()
     // 设置适合显示的数据范围
     customPlot->xAxis->setRange(0, 2.7);
     customPlot->yAxis->setRange(0, 2.6);
-    customPlot->xAxis2->setRange(0, 3.0*M_PI);
+    customPlot->xAxis2->setRange(0, 3.0 * M_PI);
     customPlot->yAxis2->setRange(-70, 35);
 
     // 在顶轴显示 π 的标签
@@ -196,7 +198,7 @@ void Widget::loadMutiAxisQCustomPlot()
 
     // 添加标题布局元素
     customPlot->plotLayout()->insertRow(0);
-    customPlot->plotLayout()->addElement(0,0,new QCPTextElement(customPlot,"一张图中显示多张图表",QFont("HarmonyOS Sans SC",12,QFont::Bold)));
+    customPlot->plotLayout()->addElement(0, 0, new QCPTextElement(customPlot, "一张图中显示多张图表", QFont("HarmonyOS Sans SC", 12, QFont::Bold)));
     // customPlot->plotLayout()->addElement(0, 0, new QCPTextElement(customPlot, "Way too many graphs in one plot", QFont("sans", 12, QFont::Bold)));
 
     // 设置各轴文本
@@ -206,8 +208,8 @@ void Widget::loadMutiAxisQCustomPlot()
     customPlot->yAxis2->setLabel("右侧轴文本");
 
     // 使底轴上的刻度向外：
-    customPlot->xAxis->setTickLength(0,5);  // 主Tick
-    customPlot->xAxis->setSubTickLength(0,3);   // 副Tick
+    customPlot->xAxis->setTickLength(0, 5); // 主Tick
+    customPlot->xAxis->setSubTickLength(0, 3);  // 副Tick
 
     // 使右轴上的刻度向内和向外：
     customPlot->yAxis2->setTickLength(3, 3);
@@ -217,30 +219,35 @@ void Widget::loadMutiAxisQCustomPlot()
 void Widget::loadDateQCustomPlot()
 {
     // 设置字符为英文
-    customPlot->setLocale(QLocale(QLocale::English,QLocale::UnitedKingdom));
+    customPlot->setLocale(QLocale(QLocale::English, QLocale::UnitedKingdom));
+    customPlot->setOpenGl(true);
 
     // 获取当前时间的秒数，用它作为数据的时间起点
     double now = QDateTime::currentDateTime().toMSecsSinceEpoch();  // 将当前时间转化为时间戳
     srand(8);   // 设置随机数种子，使我们总是得到相同的随机数据
 
     // 创建多个图表
-    for(int gi=0;gi<5;++gi)
+    for (int gi = 0; gi < 5; ++gi)
     {
         customPlot->addGraph();
-        QColor color(20+200/4.0*gi,70*(1.6-gi/4.0), 150, 150);
+        QColor color(20 + 200 / 4.0 * gi, 70 * (1.6 - gi / 4.0), 150, 150);
         customPlot->graph()->setLineStyle(QCPGraph::lsLine);
         customPlot->graph()->setPen(QPen(color.lighter(200)));
         customPlot->graph()->setBrush(QBrush(color));
 
         // 生成随机数
         QVector<QCPGraphData> timeData(250);
-        for (int i=0; i<250; ++i)
+        for (int i = 0; i < 250; ++i)
         {
-            timeData[i].key = now + 24*3600*i;
+            timeData[i].key = now + 24 * 3600 * i;
             if (i == 0)
-                timeData[i].value = (i/50.0+1)*(rand()/(double)RAND_MAX-0.5);
+            {
+                timeData[i].value = (i / 50.0 + 1) * (rand() / (double)RAND_MAX - 0.5);
+            }
             else
-                timeData[i].value = qFabs(timeData[i-1].value)*(1+0.02/4.0*(4-gi)) + (i/50.0+1)*(rand()/(double)RAND_MAX-0.5);
+            {
+                timeData[i].value = qFabs(timeData[i - 1].value) * (1 + 0.02 / 4.0 * (4 - gi)) + (i / 50.0 + 1) * (rand() / (double)RAND_MAX - 0.5);
+            }
         }
         customPlot->graph()->data()->set(timeData);
     }
@@ -251,8 +258,8 @@ void Widget::loadDateQCustomPlot()
     customPlot->xAxis->setTicker(dateTicker);
 
     QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
-    textTicker->addTick(10,"a bit\nlow");
-    textTicker->addTick(50,"quite\nhigh");
+    textTicker->addTick(10, "a bit\nlow");
+    textTicker->addTick(50, "quite\nhigh");
     customPlot->yAxis->setTicker(textTicker);
 
     // 为底部和左侧轴刻度标签设置更紧凑的字体大小
@@ -271,13 +278,104 @@ void Widget::loadDateQCustomPlot()
     customPlot->yAxis2->setTickLabels(false);
 
     // 设置轴线范围
-    customPlot->xAxis->setRange(now,now+24*3600*249);
-    customPlot->yAxis->setRange(0,60);
+    customPlot->xAxis->setRange(now, now + 24 * 3600 * 249);
+    customPlot->yAxis->setRange(0, 60);
 
     // 设置图例
     customPlot->legend->setVisible(true);
-    customPlot->legend->setBrush(QColor(255,255,255,150));
+    customPlot->legend->setBrush(QColor(255, 255, 255, 150));
 
     customPlot->yAxis->rescale(true);
     customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+}
+
+void Widget::loadBarChatQCustomPlot()
+{
+    QLinearGradient gradient(0, 0, 0, 400);
+    gradient.setColorAt(0, QColor(90, 90, 90));
+    gradient.setColorAt(0.38, QColor(105, 105, 105));
+    gradient.setColorAt(1, QColor(70, 70, 70));
+    customPlot->setBackground(QBrush(gradient));
+
+    // 创建空的柱状图对象
+    QCPBars* regen = new QCPBars(customPlot->xAxis, customPlot->yAxis);
+    QCPBars* nuclear = new QCPBars(customPlot->xAxis, customPlot->yAxis);
+    QCPBars* fossil =  new QCPBars(customPlot->xAxis, customPlot->yAxis);
+    regen->setAntialiased(false);   // 提供更清晰的像素对齐的条边框
+    nuclear->setAntialiased(false);
+    fossil->setAntialiased(false);
+    regen->setStackingGap(1);
+    nuclear->setStackingGap(1);
+    fossil->setStackingGap(1);
+
+    // 设置名称和颜色
+    fossil->setName("Fossil fuels - 化石燃料");
+    fossil->setPen(QPen(QColor(111, 9, 176).lighter(170)));
+    fossil->setBrush(QColor(111, 9, 176));
+
+    nuclear->setName("Nuclear - 核能");
+    nuclear->setPen(QPen(QColor(250, 170, 20).lighter(150)));
+    nuclear->setBrush(QColor(250, 170, 20));
+
+    regen->setName("Regenerative - 可再生能源");
+    regen->setPen(QPen(QColor(0, 168, 140).lighter(130)));
+    regen->setBrush(QColor(0, 168, 140));
+
+    // 彼此之间堆叠
+    nuclear->moveAbove(fossil);
+    regen->moveAbove(nuclear);
+
+    // 配置x轴标签
+    QVector<double> ticks;
+    QVector<QString> labels;
+    ticks << 1 << 2 << 3 << 4 << 5 << 6 << 7;
+    labels << "USA 美国" << "Japan 日本" << "Germany 德国" << "France 法国" << "UK 英国" << "Italy 意大利" << "Canada 加拿大";
+    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+    textTicker->addTicks(ticks, labels);
+
+    customPlot->xAxis->setTicker(textTicker);
+    customPlot->xAxis->setTickLabelRotation(60);    // 旋转角度
+    customPlot->xAxis->setSubTicks(false);
+    customPlot->xAxis->setTickLength(0, 4);
+    customPlot->xAxis->setRange(0, 8);
+    customPlot->xAxis->setBasePen(QPen(Qt::white));
+    customPlot->xAxis->setTickPen(QPen(Qt::white));
+    customPlot->xAxis->grid()->setVisible(true);
+    customPlot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+    customPlot->xAxis->setTickLabelColor(Qt::white);
+    customPlot->xAxis->setLabelColor(Qt::white);
+
+    // 配置 y 轴
+    customPlot->yAxis->setRange(0, 12.1);
+    customPlot->yAxis->setPadding(5);
+    customPlot->yAxis->setLabel("2007 年度人均功耗");
+    customPlot->yAxis->setBasePen(QPen(Qt::white));
+    customPlot->yAxis->setTickPen(QPen(Qt::white));
+    customPlot->yAxis->setSubTickPen(QPen(Qt::white));
+    customPlot->yAxis->grid()->setSubGridVisible(true);
+    customPlot->yAxis->setTickLabelColor(Qt::white);
+    customPlot->yAxis->setLabelColor(Qt::white);
+    customPlot->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
+    customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+
+    // 添加数据
+    QVector<double> fossilData, nuclearData, regenData;
+    fossilData  << 0.86 * 10.5 << 0.83 * 5.5 << 0.84 * 5.5 << 0.52 * 5.8 << 0.89 * 5.2 << 0.90 * 4.2 << 0.67 * 11.2;
+    nuclearData << 0.08 * 10.5 << 0.12 * 5.5 << 0.12 * 5.5 << 0.40 * 5.8 << 0.09 * 5.2 << 0.00 * 4.2 << 0.07 * 11.2;
+    regenData   << 0.06 * 10.5 << 0.05 * 5.5 << 0.04 * 5.5 << 0.06 * 5.8 << 0.02 * 5.2 << 0.07 * 4.2 << 0.25 * 11.2;
+    fossil->setData(ticks, fossilData);
+    nuclear->setData(ticks, nuclearData);
+    regen->setData(ticks, regenData);
+
+    // 配置图例
+    customPlot->legend->setVisible(true);
+    customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop | Qt::AlignHCenter);
+    customPlot->legend->setBrush(QColor(255, 255, 255, 100));
+    customPlot->legend->setBrush(QColor(255, 255, 255, 100));
+    customPlot->legend->setBorderPen(Qt::NoPen);
+
+    QFont legendFont = font();
+    legendFont.setPointSize(10);
+    customPlot->legend->setFont(legendFont);
+    customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }

@@ -6,8 +6,9 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class Widget;
+namespace Ui
+{
+    class Widget;
 }
 QT_END_NAMESPACE
 
@@ -21,15 +22,16 @@ public:
 
 private:
     Ui::Widget *ui;
-    QVBoxLayout* vBoxLayoutMain;
-    QCustomPlot* customPlot;
+    QVBoxLayout *vBoxLayoutMain;
+    QCustomPlot *customPlot;
 
-    QCPItemTracer* tracer;
+    QCPItemTracer *tracer;
     QCPItemText *tracerLabel;
 
     void loadBasicQCustomPlot();    // 基本绘图
     void loadSimpleQCustomPlot();   // 衰减余弦函数及其指数
     void loadMutiAxisQCustomPlot(); // 多轴和高级样式
     void loadDateQCustomPlot(); // 日期和时间数据
+    void loadBarChatQCustomPlot();  // 条形图
 };
 #endif // WIDGET_H

@@ -1,8 +1,14 @@
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++17
+
+win32:LIBS+= -lopengl32
+QMAKE_CFLAGS += -Wa,-mbig-obj
+QMAKE_CXXFLAGS += -Wa,-mbig-obj
+
+DEFINES += QCUSTOMPLOT_USE_OPENGL
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
