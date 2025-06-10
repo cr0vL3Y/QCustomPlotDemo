@@ -4,6 +4,7 @@
 #include "qcustomplot.h"
 
 #include <QWidget>
+#include <QObject>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -33,5 +34,13 @@ private:
     void loadMutiAxisQCustomPlot(); // 多轴和高级样式
     void loadDateQCustomPlot(); // 日期和时间数据
     void loadBarChatQCustomPlot();  // 条形图
+
+    QLabel *labelFps;
+    QTimer dataTimer;
+    QElapsedTimer time;
+    void loadRealtimeDataDemo();
+
+private slots:
+    void realtimeDataSlot();
 };
 #endif // WIDGET_H
